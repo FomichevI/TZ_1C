@@ -25,5 +25,5 @@ MonoBehaviour:
   - <FigureIndex>k__BackingField: triangle
     <FigureSprite>k__BackingField: {fileID: 21300000, guid: fc913db5c44434c4b80ba992c6c3afdf, type: 3}
     <HoleForFigureSprite>k__BackingField: {fileID: 21300000, guid: 356e7f04ddb4f6c49a3cd8f8f4e5c2ad, type: 3}
-  _minSlidingSpeed: 0.07
-  _maxSlidingSpeed: 0.15
+  _minSlidingSpeed: 0.08
+  _maxSlidingSpeed: 0.12

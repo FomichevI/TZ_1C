@@ -1,7 +1,9 @@
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(FigureAnimator))]
 public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObject
 {
     // Поля интерфейсов
@@ -16,6 +18,7 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
 
     // Собственные поля
     public string FigureIndex { get; private set; }
+    [SerializeField] private FigureAnimator _animator;
     [SerializeField] private SpriteRenderer _mainSr;
     [SerializeField] private float _replaceOnReleaseTime = 0.5f;
     private Vector2 _endPosition;
@@ -34,6 +37,11 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
         _sessionConfig = sessionConfig;
     }
 
+    private void Awake()
+    {
+        _animator = GetComponent<FigureAnimator>();
+    }
+
     private void OnEnable()
     {
         GlobalSignals.OnRestartLevel.AddListener(SimpleDestroy);
@@ -46,21 +54,18 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
 
     public void StartSlide()
     {
-        Debug.Log("StartSlide");
         RandomizeFigure();
-        _isActive = _isSliding = true;
+        _animator.AnimateRising(() => _isActive = _isSliding = true);
     }
 
     public void StartDragging()
     {
-        Debug.Log("StartDragging");
         _isSliding = false;
         _currentPositionOnLine = new Vector2(transform.position.x, transform.position.y);
     }
 
     public void StopDragging()
     {
-        Debug.Log("StopDragging");
         // Найти ближайший Holder, который находится в пределах своей CatchDistance
         int nearestHolderIndex = -1;
         float nearestHolderSqrDistance = float.MaxValue;
@@ -77,8 +82,8 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
             }
         }
 
-        if (nearestHolderIndex != -1)        
-            CatchByHolder(nearestHolderIndex);        
+        if (nearestHolderIndex != -1)
+            CatchByHolder(nearestHolderIndex);
         else
             ContinueSlidingOnRelease();
     }
@@ -86,7 +91,8 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
     public void ContinueSlidingOnRelease()
     {
         _isActive = false;
-        transform.DOMove(_currentPositionOnLine, _replaceOnReleaseTime).OnComplete(() => {
+        transform.DOMove(_currentPositionOnLine, _replaceOnReleaseTime).OnComplete(() =>
+        {
             _isSliding = true;
             _isActive = true;
         });
@@ -103,11 +109,13 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
     private void MoveToCorrectHolder(int holderIndex)
     {
         _isActive = false;
-        transform.DOMove(_figureSorter.Holders[holderIndex].Position, _replaceOnReleaseTime).OnComplete(() => {
-            Debug.Log("Correct holder!");
-            GlobalSignals.OnFigureCollected?.Invoke();
-            Destroy(gameObject);
-        });
+        transform.DOMove(_figureSorter.Holders[holderIndex].Position, _replaceOnReleaseTime * 0.5f).OnComplete(() =>
+            _animator.AnimateDisappear(() =>
+            {
+                if (_sessionConfig.IsPlaying)
+                    GlobalSignals.OnFigureCollected?.Invoke();
+                Destroy(gameObject);
+            }));
     }
 
     private void FixedUpdate()
@@ -133,10 +141,9 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
 
     private void DetonateObject()
     {
-        Debug.Log("Детонация");
         GlobalSignals.OnFigureDetonate?.Invoke();
         _isActive = _isSliding = false;
-        Destroy(gameObject);
+        _animator.AnimateDetonate(() => Destroy(gameObject));
     }
 
     private void SimpleDestroy()

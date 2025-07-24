@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
   <CatchDistance>k__BackingField: 0.5
-  _minTargetFiguresCount: 15
-  _maxTargetFiguresCount: 25
-  <StartHitPoints>k__BackingField: 10
+  _minTargetFiguresCount: 20
+  _maxTargetFiguresCount: 30
+  <StartHitPoints>k__BackingField: 5

@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3046586284677907239}
   - component: {fileID: 1497210534282794056}
+  - component: {fileID: 6992387050080981650}
   - component: {fileID: 6133691301763740985}
   m_Layer: 0
   m_Name: FigurePrefab
@@ -133,7 +134,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 154923d0d805cee4fa0ecd02672cbe98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
   _mainSr: {fileID: 8660347026244029377}
+  _replaceOnReleaseTime: 0.5
+--- !u!114 &6992387050080981650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4653862968034110406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3350cb1beafb2b845907127c477255c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animaionsTime: 0.5
+  _detonateParticlesGo: {fileID: 0}
 --- !u!61 &6133691301763740985
 BoxCollider2D:
   m_ObjectHideFlags: 0

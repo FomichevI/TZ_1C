@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469a40f7a2e70a24a8cd99e3a043a877, type: 3}
   m_Name: SpawnersConfig
   m_EditorClassIdentifier: 
-  _minSpawnDelay: 0.3
-  _maxSpawnDelay: 1.5
+  _minSpawnDelay: 0.6
+  _maxSpawnDelay: 1.2
