@@ -6,4 +6,5 @@ public class GameSettings : ScriptableObject
     public SpawnerConfig SpawnerConfig;
     public SlidingFigureConfig SlidingFigureConfig;
     public GameplayConfig GameplayConfig;
+    public SessionConfig SessionConfig;
 }

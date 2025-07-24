@@ -15,3 +15,4 @@ MonoBehaviour:
   SpawnerConfig: {fileID: 11400000, guid: dfb7c7316e5f6004897b9e3eb37bfa05, type: 2}
   SlidingFigureConfig: {fileID: 11400000, guid: c2f74999008302b4a900b643de863e79, type: 2}
   GameplayConfig: {fileID: 11400000, guid: eda60578800319041a85ad906dd24b11, type: 2}
+  SessionConfig: {fileID: 11400000, guid: 86148709ef044fa4d9c392469dca0cfd, type: 2}

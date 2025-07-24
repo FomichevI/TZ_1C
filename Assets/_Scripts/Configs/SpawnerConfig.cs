@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SpawnersConfig", menuName = "Scriptable Objects/SpawnersConfig")]
 public class SpawnerConfig : ScriptableObject
 {
-    [SerializeField, Range(1, 2)] private float _minSpawnDelay;
-    [SerializeField, Range(2, 5)] private float _maxSpawnDelay; 
+    [SerializeField, Range(0.1f, 10)] private float _minSpawnDelay;
+    [SerializeField, Range(0.1f, 10)] private float _maxSpawnDelay; 
 
     public float GetRandomSpawnDelay()
     {

@@ -24,12 +24,19 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
     // Ссылки на внешние зависимости
     private SlidingFigureConfig _config;
     private IFigureSorter _figureSorter;
+    private SessionConfig _sessionConfig;
 
     [Inject]
-    private void Construct(SlidingFigureConfig config, IFigureSorter figureSorter)
+    private void Construct(SlidingFigureConfig config, IFigureSorter figureSorter, SessionConfig sessionConfig)
     {
         _config = config;
         _figureSorter = figureSorter;
+        _sessionConfig = sessionConfig;
+    }
+
+    private void OnEnable()
+    {
+        GlobalSignals.OnRestartLevel.AddListener(SimpleDestroy);
     }
 
     public void SetEndPosition(Vector2 endPosition)
@@ -98,13 +105,14 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
         _isActive = false;
         transform.DOMove(_figureSorter.Holders[holderIndex].Position, _replaceOnReleaseTime).OnComplete(() => {
             Debug.Log("Correct holder!");
+            GlobalSignals.OnFigureCollected?.Invoke();
             Destroy(gameObject);
         });
     }
 
     private void FixedUpdate()
     {
-        if (_isSliding)
+        if (_isSliding && _sessionConfig.IsPlaying)
         {
             transform.position = Vector3.MoveTowards(transform.position, (Vector3)_endPosition, _speed);
             if (transform.position == (Vector3)_endPosition)
@@ -126,7 +134,16 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
     private void DetonateObject()
     {
         Debug.Log("Детонация");
+        GlobalSignals.OnFigureDetonate?.Invoke();
         _isActive = _isSliding = false;
         Destroy(gameObject);
+    }
+
+    private void SimpleDestroy()
+    { Destroy(gameObject); }
+
+    private void OnDisable()
+    {
+        GlobalSignals.OnRestartLevel.RemoveListener(SimpleDestroy);
     }
 }

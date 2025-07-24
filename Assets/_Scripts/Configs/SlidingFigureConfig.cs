@@ -6,8 +6,8 @@ using Random = UnityEngine.Random;
 public class SlidingFigureConfig : ScriptableObject
 {
     [field: SerializeField] public FigureInfo[] FiguresInfo { get; private set; }
-    [SerializeField, Range(0, 0.1f)] private float _minSlidingSpeed;
-    [SerializeField, Range(0.1f, 0.2f)] private float _maxSlidingSpeed;
+    [SerializeField, Range(0, 1)] private float _minSlidingSpeed;
+    [SerializeField, Range(0, 1)] private float _maxSlidingSpeed;
 
     public float GetRandomSpeed()
     {

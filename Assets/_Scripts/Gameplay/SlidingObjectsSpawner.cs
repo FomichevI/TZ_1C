@@ -10,34 +10,37 @@ public class SlidingObjectsSpawner : MonoBehaviour
     private int _currentLineIndex;
     private SlidingObjectsFactory _factory;
     private SpawnerConfig _config;
-    private GameplayConfig _gameplayConfig;
+    private SessionConfig _sessionConfig;
 
     private CancellationTokenSource _cts;
 
     [Inject]
-    private void Construct(SlidingObjectsFactory slidingObjectsFactory, SpawnerConfig spawnerConfig, GameplayConfig gameplayConfig)
+    private void Construct(SlidingObjectsFactory slidingObjectsFactory, SpawnerConfig spawnerConfig, SessionConfig sessionConfig)
     {
         _factory = slidingObjectsFactory;
         _config = spawnerConfig;
-        _gameplayConfig = gameplayConfig;
+        _sessionConfig = sessionConfig;
     }
 
-    private void Start()
+    private void OnEnable()
+    {
+        GlobalSignals.OnLevelStarted.AddListener(StartSpawning);
+    }
+
+    private void StartSpawning()
     {
         RandomizeNextLine();
-
         _cts = new CancellationTokenSource();
         CancellationToken token = _cts.Token;
         SpawningAsync(token);
     }
 
-
     private async void SpawningAsync(CancellationToken token)
     {
-        while (_gameplayConfig.IsPlaying)
+        while (_sessionConfig.IsPlaying)
         {
-            await Task.Delay((int)(_config.GetRandomSpawnDelay()*1000));
-            if (_gameplayConfig.IsPlaying && !token.IsCancellationRequested)
+            await Task.Delay((int)(_config.GetRandomSpawnDelay() * 1000));
+            if (_sessionConfig.IsPlaying && !token.IsCancellationRequested)
             {
                 Spawn();
                 RandomizeNextLine();
@@ -62,5 +65,10 @@ public class SlidingObjectsSpawner : MonoBehaviour
     private void OnDestroy()
     {
         _cts.Cancel();
+    }
+
+    private void OnDisable()
+    {
+        GlobalSignals.OnLevelStarted.RemoveListener(StartSpawning);
     }
 }

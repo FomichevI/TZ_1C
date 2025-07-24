@@ -11,5 +11,6 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
         Container.Bind<SpawnerConfig>().FromInstance(_gameSettings.SpawnerConfig);
         Container.Bind<SlidingFigureConfig>().FromInstance(_gameSettings.SlidingFigureConfig);
         Container.Bind<GameplayConfig>().FromInstance(_gameSettings.GameplayConfig);
+        Container.Bind<SessionConfig>().FromInstance(_gameSettings.SessionConfig);
     }
 }

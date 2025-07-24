@@ -4,7 +4,14 @@ using UnityEngine;
 public class GameplayConfig : ScriptableObject
 {
     [field: SerializeField, Range(0,3), Tooltip("Дистанция захвата детали сортером")] 
-    public float CatchDistance { get; private set; } 
+    public float CatchDistance { get; private set; }
 
-    public bool IsPlaying { get; private set; } = true;
+    [SerializeField, Range(1, 50)] private int _minTargetFiguresCount;
+    [SerializeField, Range(1, 50)] private int _maxTargetFiguresCount;
+    [field: SerializeField, Range(1, 100)] public int StartHitPoints { get; private set; }
+
+    public int GetTargetFuguresCount()
+    {
+        return Random.Range(_minTargetFiguresCount, _maxTargetFiguresCount);
+    }
 }
