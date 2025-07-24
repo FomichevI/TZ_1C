@@ -11,5 +11,6 @@ public class GameplaySceneInstaller : MonoInstaller
     {
         Container.BindFactory<ISlidingObject, SlidingObjectsFactory>().FromComponentInNewPrefab(_slidingFigurePrefab);
         Container.Bind<IFigureSorter>().To<FigureHoleSorter>().FromInstance(_figureHoleSorter);
+        Container.Bind<IObjectMover>().To<SimpleObjectMover>().FromNew().AsSingle();
     }
 }
