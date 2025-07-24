@@ -20,7 +20,7 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
     public string FigureIndex { get; private set; }
     [SerializeField] private FigureAnimator _animator;
     [SerializeField] private SpriteRenderer _mainSr;
-    [SerializeField] private float _replaceOnReleaseTime = 0.5f;
+    [SerializeField] private float _replaceOnReleaseTime = 0.5f; //Время возвращения объекта на линию после того, как его отпустили
     private Vector2 _endPosition;
     private Vector2 _currentPositionOnLine; // Позиция, с которой объект начали перемещать
 
@@ -82,6 +82,7 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
             }
         }
 
+        // Если такой Holder найден, то выполняем CatchByHolder
         if (nearestHolderIndex != -1)
             CatchByHolder(nearestHolderIndex);
         else
@@ -147,7 +148,14 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
     }
 
     private void SimpleDestroy()
-    { Destroy(gameObject); }
+    { 
+        Destroy(gameObject); 
+    }
+
+    private void OnDestroy()
+    {
+        GlobalSignals.OnFigureDestroy?.Invoke(this);
+    }
 
     private void OnDisable()
     {

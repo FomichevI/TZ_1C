@@ -1,3 +1,5 @@
+
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -5,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     private GameplayConfig _gameplayConfig;
     private SessionConfig _sessionConfig;
+    private List<ISlidingObject> _activeFigures = new List<ISlidingObject>();
 
     [Inject]
     private void Construct(GameplayConfig gameplayConfig, SessionConfig sessionConfig)
@@ -15,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GlobalSignals.OnFigureSpawn.AddListener(OnFigureSpawn);
+        GlobalSignals.OnFigureDestroy.AddListener(OnFigureDestroy);
         GlobalSignals.OnFigureDetonate.AddListener(OnFigureDetonate);
         GlobalSignals.OnFigureCollected.AddListener(OnFigureCollected);
         GlobalSignals.OnRestartLevel.AddListener(RestartLevel);
@@ -32,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void RestartLevel()
     {
+        _activeFigures.Clear();
         InitSessionConfig();
         _sessionConfig.ContinueGame();
         GlobalSignals.OnLevelStarted?.Invoke();
@@ -40,6 +46,24 @@ public class GameManager : MonoBehaviour
     private void InitSessionConfig()
     {
         _sessionConfig.Initialize(_gameplayConfig.GetTargetFuguresCount(), _gameplayConfig.StartHitPoints);
+    }
+
+    private void OnFigureSpawn(ISlidingObject slidingObject)
+    {
+        _activeFigures.Add(slidingObject);
+        _sessionConfig.RiseSpawnedFiguresCount();
+    }
+
+    private void OnFigureDestroy(ISlidingObject slidingObject)
+    {
+        _activeFigures.Remove(slidingObject);
+
+        if (_sessionConfig.SpawnedFiguresCount >= _sessionConfig.TargetFiguresCount &&
+            _activeFigures.Count == 0 && _sessionConfig.HitPoints > 0)
+        {
+            StopGame();
+            GlobalSignals.OnWinLevel?.Invoke();
+        }
     }
 
     private void OnFigureDetonate()
@@ -55,11 +79,6 @@ public class GameManager : MonoBehaviour
     private void OnFigureCollected()
     {
         _sessionConfig.CollectFigure();
-        if (_sessionConfig.CurrentFiguresCollected >= _sessionConfig.TargetFiguresCount)
-        {
-            StopGame();
-            GlobalSignals.OnWinLevel?.Invoke();
-        }
     }
 
     private void OnDisable()

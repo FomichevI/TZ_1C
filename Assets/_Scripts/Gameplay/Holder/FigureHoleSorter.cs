@@ -8,7 +8,7 @@ public class FigureHoleSorter : MonoBehaviour, IFigureSorter
 
     [SerializeField] private FigureHoleHolder[] _holders;
 
-    // —сылки на глобальные настройки
+    // —сылки на внешние зависимости
     private SlidingFigureConfig _figureConfig;
     private GameplayConfig _gameplayConfig;
 

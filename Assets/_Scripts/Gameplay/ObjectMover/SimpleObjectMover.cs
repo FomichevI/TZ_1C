@@ -19,7 +19,6 @@ public class SimpleObjectMover : IObjectMover
         if (_draggingObject != null)
         {
             Vector2 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //newPos.z = 0;
             _draggingObject.Transform.position = newPos;
         }
     }

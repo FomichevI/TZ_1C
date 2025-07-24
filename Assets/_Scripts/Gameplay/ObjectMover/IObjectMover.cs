@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IObjectMover
 {
     IDraggingObject DraggingObject { get; }

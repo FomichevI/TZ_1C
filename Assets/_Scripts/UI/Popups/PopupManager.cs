@@ -24,17 +24,20 @@ public class PopupManager : MonoBehaviour
     {
         if (!_openedPopups.Contains(popup))
             _openedPopups.Add(popup);
-        UpdateBlureBg();
+        UpdateBg();
     }
 
     private void OnPopupClosed(Popup popup)
     {
         if (_openedPopups.Contains(popup))
             _openedPopups.Remove(popup);
-        UpdateBlureBg();
+        UpdateBg();
     }
 
-    private void UpdateBlureBg()
+    /// <summary>
+    /// Обновить бэкграунд в зависимости от наличия активных попапов
+    /// </summary>
+    private void UpdateBg()
     {
         if (_openedPopups.Count > 0)
         {

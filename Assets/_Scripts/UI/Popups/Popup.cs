@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(CanvasGroup))]
 public abstract class Popup : MonoBehaviour
@@ -11,11 +10,6 @@ public abstract class Popup : MonoBehaviour
     private CanvasGroup _canvasGroup;
 
     private void Awake()
-    {
-        OnAwake();
-    }
-
-    protected virtual void OnAwake()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -29,19 +23,6 @@ public abstract class Popup : MonoBehaviour
         transform.DOKill();
         transform.DOScale(Vector3.one * 1.1f, _animateTime).OnComplete(() =>
             transform.DOScale(Vector3.one, _animateTime / 3));
-        GlobalSignals.OnPopupOpened?.Invoke(this);
-    }
-
-    public virtual void Show(Action onShowed)
-    {
-        gameObject.SetActive(true);
-        transform.localScale = Vector3.zero;
-        _canvasGroup.alpha = 1f;
-        _canvasGroup.blocksRaycasts = true;
-        transform.DOKill();
-        transform.DOScale(Vector3.one * 1.1f, _animateTime).OnComplete(() =>
-            transform.DOScale(Vector3.one, _animateTime / 3).OnComplete(() =>
-                onShowed?.Invoke()));
         GlobalSignals.OnPopupOpened?.Invoke(this);
     }
 

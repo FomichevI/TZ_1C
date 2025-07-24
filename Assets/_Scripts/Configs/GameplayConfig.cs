@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Основные настройки геймплея
+/// </summary>
 [CreateAssetMenu(fileName = "GameplayConfig", menuName = "Scriptable Objects/GameplayConfig")]
 public class GameplayConfig : ScriptableObject
 {

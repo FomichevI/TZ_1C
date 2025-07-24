@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Настройки скользящих прямолинейно объектов
+/// </summary>
 [CreateAssetMenu(fileName = "SlidingFiguresConfig", menuName = "Scriptable Objects/SlidingFiguresConfig")]
 public class SlidingFigureConfig : ScriptableObject
 {
