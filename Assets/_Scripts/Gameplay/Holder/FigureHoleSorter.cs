@@ -1,14 +1,14 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using Zenject;
 
 public class FigureHoleSorter : MonoBehaviour, IFigureSorter
 {
-    // Поля интерфейса
+    // РџРѕР»СЏ РёРЅС‚РµСЂС„РµР№СЃР°
     public IFigureHolder[] Holders => _holders;
 
     [SerializeField] private FigureHoleHolder[] _holders;
 
-    // Ссылки на внешние зависимости
+    // РЎСЃС‹Р»РєРё РЅР° РІРЅРµС€РЅРёРµ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё
     private SlidingFigureConfig _figureConfig;
     private GameplayConfig _gameplayConfig;
 

@@ -1,8 +1,8 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class FigureHoleHolder : MonoBehaviour, IFigureHolder
 {
-    // Ïîëÿ èíòåðôåéñà
+    // ÐŸÐ¾Ð»Ñ Ð¸Ð½Ñ‚ÐµÑ€Ñ„ÐµÐ¹ÑÐ°
     public string FigureIndex => _figureIndex;
     public SpriteRenderer MainSr => _mainSr;
     public float CatchDistance => _catchDistance;

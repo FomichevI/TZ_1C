@@ -1,12 +1,12 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 /// <summary>
-/// Основные настройки геймплея
+/// РћСЃРЅРѕРІРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё РіРµР№РјРїР»РµСЏ
 /// </summary>
 [CreateAssetMenu(fileName = "GameplayConfig", menuName = "Scriptable Objects/GameplayConfig")]
 public class GameplayConfig : ScriptableObject
 {
-    [field: SerializeField, Range(0,3), Tooltip("Дистанция захвата детали сортером")] 
+    [field: SerializeField, Range(0,3), Tooltip("Р”РёСЃС‚Р°РЅС†РёСЏ Р·Р°С…РІР°С‚Р° РґРµС‚Р°Р»Рё СЃРѕСЂС‚РµСЂРѕРј")] 
     public float CatchDistance { get; private set; }
 
     [SerializeField, Range(1, 50)] private int _minTargetFiguresCount;

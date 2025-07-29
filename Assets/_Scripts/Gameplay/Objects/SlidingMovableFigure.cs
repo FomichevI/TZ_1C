@@ -1,4 +1,4 @@
-using DG.Tweening;
+п»їusing DG.Tweening;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(FigureAnimator))]
 public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObject
 {
-    // Поля интерфейсов
+    // РџРѕР»СЏ РёРЅС‚РµСЂС„РµР№СЃРѕРІ
     public Transform Transform => transform;
     public float Speed => _speed;
     public bool IsSliding => _isSliding;
@@ -16,15 +16,15 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
     private bool _isActive = false;
     private bool _isSliding = false;
 
-    // Собственные поля
+    // РЎРѕР±СЃС‚РІРµРЅРЅС‹Рµ РїРѕР»СЏ
     public string FigureIndex { get; private set; }
     [SerializeField] private FigureAnimator _animator;
     [SerializeField] private SpriteRenderer _mainSr;
-    [SerializeField] private float _replaceOnReleaseTime = 0.5f; //Время возвращения объекта на линию после того, как его отпустили
+    [SerializeField] private float _replaceOnReleaseTime = 0.5f; //Р’СЂРµРјСЏ РІРѕР·РІСЂР°С‰РµРЅРёСЏ РѕР±СЉРµРєС‚Р° РЅР° Р»РёРЅРёСЋ РїРѕСЃР»Рµ С‚РѕРіРѕ, РєР°Рє РµРіРѕ РѕС‚РїСѓСЃС‚РёР»Рё
     private Vector2 _endPosition;
-    private Vector2 _currentPositionOnLine; // Позиция, с которой объект начали перемещать
+    private Vector2 _currentPositionOnLine; // РџРѕР·РёС†РёСЏ, СЃ РєРѕС‚РѕСЂРѕР№ РѕР±СЉРµРєС‚ РЅР°С‡Р°Р»Рё РїРµСЂРµРјРµС‰Р°С‚СЊ
 
-    // Ссылки на внешние зависимости
+    // РЎСЃС‹Р»РєРё РЅР° РІРЅРµС€РЅРёРµ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё
     private SlidingFigureConfig _config;
     private IFigureSorter _figureSorter;
     private SessionConfig _sessionConfig;
@@ -66,7 +66,7 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
 
     public void StopDragging()
     {
-        // Найти ближайший Holder, который находится в пределах своей CatchDistance
+        // РќР°Р№С‚Рё Р±Р»РёР¶Р°Р№С€РёР№ Holder, РєРѕС‚РѕСЂС‹Р№ РЅР°С…РѕРґРёС‚СЃСЏ РІ РїСЂРµРґРµР»Р°С… СЃРІРѕРµР№ CatchDistance
         int nearestHolderIndex = -1;
         float nearestHolderSqrDistance = float.MaxValue;
         Vector2 currentPosition = transform.position;
@@ -82,7 +82,7 @@ public class SlidingMovableFigure : MonoBehaviour, IDraggingObject, ISlidingObje
             }
         }
 
-        // Если такой Holder найден, то выполняем CatchByHolder
+        // Р•СЃР»Рё С‚Р°РєРѕР№ Holder РЅР°Р№РґРµРЅ, С‚Рѕ РІС‹РїРѕР»РЅСЏРµРј CatchByHolder
         if (nearestHolderIndex != -1)
             CatchByHolder(nearestHolderIndex);
         else

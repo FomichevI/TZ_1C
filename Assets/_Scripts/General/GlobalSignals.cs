@@ -1,7 +1,7 @@
-using UnityEngine.Events;
+п»їusing UnityEngine.Events;
 
 /// <summary>
-/// Все основные события игры
+/// Р’СЃРµ РѕСЃРЅРѕРІРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ РёРіСЂС‹
 /// </summary>
 public static class GlobalSignals
 {

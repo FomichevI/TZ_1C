@@ -1,7 +1,7 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 /// <summary>
-/// Параметры текущей игровой сессии
+/// С•Р°СЂР°РјРµС‚СЂС‹ С‚РµРєСѓС‰РµР№ РёРіСЂРѕРІРѕР№ СЃРµСЃСЃРёРё
 /// </summary>
 [CreateAssetMenu(fileName = "SessionConfig", menuName = "Scriptable Objects/SessionConfig")]
 public class SessionConfig : ScriptableObject
@@ -13,7 +13,7 @@ public class SessionConfig : ScriptableObject
     [field: SerializeField] public int CurrentFiguresCollected { get; private set; }
 
     /// <summary>
-    /// Инициализация стартовых параметров сессии
+    /// В»РЅРёС†РёР°Р»РёР·Р°С†РёВ¤ СЃС‚Р°СЂС‚РѕРІС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ СЃРµСЃСЃРёРё
     /// </summary>
     public void Initialize(int targetFiguresCount, int hitPoints)
     {
